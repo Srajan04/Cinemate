@@ -15,7 +15,7 @@ from Project import hollywoodMovies, bollywoodMovies
 # Set the OUTPUT_PATH to the parent directory of the current script
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / \
-    Path(r"D:\SRAJAN\Python\DSA Sem-3 Cinemate Project\assets")  # Set the ASSETS_PATH to the tS folder
+    Path(r" ")  # Set the ASSETS_PATH to the tS folder
 
 # Define a function to create a Path object relative to ASSETS_PATH
 
