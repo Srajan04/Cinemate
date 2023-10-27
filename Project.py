@@ -368,9 +368,9 @@ def seat_selection():
         no_of_seats -= 1
 
 
-def ticket_print(temp):
+def ticket_print(temp, tempUser):
     # Display the ticket details using the tabulate function
-    print(tabulate([list(temp[userN].values())], headers=[
+    print(tabulate([list(temp[tempUser].values())], headers=[
         'Movie Name', 'Theatre Name', 'Time', 'Seat Number'], tablefmt="fancy_grid"))
 
     # Print a confirmation message
@@ -382,10 +382,7 @@ def ticket_print(temp):
     booking_data(temp)
 
 
-def booking_history():
-    # Create a new linked list to store the booking history
-    insert_node_atend = Linked_list()
-
+def booking_history(tempUser):
     # Define the path to the JSON file containing booking data
     filename = pathBrowseData
 
@@ -395,12 +392,13 @@ def booking_history():
 
         # Iterate through the keys (which are user names) in the data
         for i in data.keys():
-            if i == userN:  # Check if the user name matches the current user
+            if tempUser in i:  # Check if the user name matches the current user
+                # Create a new linked list to store the booking history
+                insert_node_atend = Linked_list()
                 # Insert the booking data into the linked list
                 insert_node_atend.insert(data[i])
-
-    # Return the linked list containing the booking history for the user
-    return insert_node_atend
+                # Display the booking history
+                insert_node_atend.display()
 
 
 # Menus
@@ -504,11 +502,18 @@ def admin_menu():
         admin_menu()
 
 
-def user_menu():
+def user_menu(tempUser):
     # Display the available options
     print("1. Book Movie Ticket")
     print("2. View Booking History")
     print("3. Return")
+
+    # Generate a temporary username for the current user, to be used in the booking data
+    tempUserN = (
+        tempUser + "_"
+        + random.choice(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"])
+        + random.choice(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"])
+    )
 
     # Get the user's choice
     choice = int(input("Enter your choice: "))
@@ -546,25 +551,24 @@ def user_menu():
         print_seating_chart()
         seat_selection()
         print_seating_chart()
-        temp = {userN: {"Movie Name": namemov, "Theatre Name": nameth,
-                        "Time": "9:00 AM", "Seat Number": rlt_final_seats}}
-        ticket_print(temp)
+        temp = {tempUserN: {"Movie Name": namemov, "Theatre Name": nameth,
+                            "Time": "9:00 AM", "Seat Number": rlt_final_seats}}
+        ticket_print(temp, tempUserN)
         input("\nPress any key to continue...")
         os.system('CLS')
 
         # Return to the user menu
-        user_menu()
+        user_menu(tempUser)
 
     elif choice == 2:
         # Display booking history
         print("Booking History")
-        insert_node_atend = booking_history()
-        insert_node_atend.display()
+        booking_history(tempUser)
         input("\nPress any key to continue...")
         os.system('CLS')
 
         # Return to the user menu
-        user_menu()
+        user_menu(tempUser)
 
     elif choice == 3:
         os.system('CLS')
@@ -577,7 +581,7 @@ def user_menu():
         os.system('CLS')
 
         # Return to the user menu
-        user_menu()
+        user_menu(tempUser)
 
 
 def main_menu():
@@ -596,7 +600,7 @@ def main_menu():
     elif choice == 2:
         # User option selected, so call user_menu()
         print("Welcome User")
-        user_menu()
+        user_menu(userN)
     elif choice == 3:
         # Exit the program
         exit()
