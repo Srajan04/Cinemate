@@ -55,9 +55,9 @@ class Linked_list:
 
 
 # Path to User Data
-pathUserData = r'D:\SRAJAN\Python\DSA Sem-3 Cinemate Project\userdata.json'
+pathUserData = r' '
 # Path to Browse Data
-pathBrowseData = r'D:\SRAJAN\Python\DSA Sem-3 Cinemate Project\browse.json'
+pathBrowseData = r' '
 
 # GLOBAL
 # List of Hollywood Movies with Theatres and Timings
